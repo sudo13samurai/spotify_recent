@@ -1,6 +1,8 @@
 # spotify_recent
 A minimalist Python script that fetches your 500 most recently played Spotify tracks, displays them formatted and styled in the terminal, and exports a webpage with album art, artist info, and playback timestamps.
 
+<img width="999" height="1434" alt="image" src="https://github.com/user-attachments/assets/116e0be6-6632-4e5b-b2c3-03c64e82c561" />
+
 # 🎧 Spotify Recently Played (500 Track Dashboard)
 
 A clean Python script that uses the Spotify Web API to fetch your **last 500 played songs**,  
@@ -25,13 +27,13 @@ complete with album art, artists, albums, and timestamps.
 
 ## 🔑 Setup
 1. Get a Spotify Developer account: [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
-2. Create an app → copy your **Client ID**, **Client Secret**, and add: http://127.0.0.1:8888/callback
-
-## Redirect URIs.
-3. Use the Authorization Code Flow to get your access token, or run this script once to handle it.
+2. Create an app → copy your **Client ID**, **Client Secret**, and add: http://127.0.0.1:8888/callback Redirect URIs.
+3. Use the Authorization Code Flow to get your access token, or run spotify_token.sh once to handle it.
 4. Export your token before running: export SPOTIFY_TOKEN="your_access_token_here"
+## Access Token Documentation : [https://developer.spotify.com/documentation/web-api/concepts/access-token](https://developer.spotify.com/documentation/web-api/concepts/access-token)
 
 ## 🧠 Usage
+export SPOTIFY_TOKEN="your_access_token_here"
 python3 spotify_recent_500.py
 
 You’ll see progress live in your terminal:
@@ -44,8 +46,9 @@ You’ll see progress live in your terminal:
 💾 Saved JSON → spotify_recent_500.json
 🌐 Web page → spotify_recent_500.html
 
+<img width="545" height="664" alt="image" src="https://github.com/user-attachments/assets/4c53438d-c147-406c-a9f4-35c5419257f0" />
+
 Then just open spotify_recent_500.html in your browser — it looks like your own personal Spotify Wrapped.
-Example → <img width="1199" height="1634" alt="image" src="https://github.com/user-attachments/assets/116e0be6-6632-4e5b-b2c3-03c64e82c561" />
 
 💚 Credits
 
