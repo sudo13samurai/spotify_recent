@@ -23,13 +23,19 @@ YELLOW = "\033[93m"
 MAGENTA = "\033[95m"
 RESET = "\033[0m"
 
+# --- FETCH USER INFO ---
 def fetch_me():
-    """Get Spotify user profile (for display name)."""
+    """Get Spotify user profile (name + avatar)."""
     r = requests.get(URL_ME, headers=HEADERS)
     if r.status_code != 200:
-        return "My"
-    return r.json().get("display_name", "My")
+        return {"name": "My", "avatar": ""}
+    data = r.json()
+    return {
+        "name": data.get("display_name", "My"),
+        "avatar": data.get("images", [{}])[0].get("url", "")
+    }
 
+# --- FETCH RECENTLY PLAYED ---
 def fetch_recent(before=None):
     params = {"limit": LIMIT}
     if before:
@@ -39,11 +45,13 @@ def fetch_recent(before=None):
         raise SystemExit(f"❌ API error {r.status_code}: {r.text}")
     return r.json()
 
-# --- FETCH USER NAME ---
-username = fetch_me()
+# --- MAIN FETCH LOOP ---
+me = fetch_me()
+username = me["name"]
+avatar = me["avatar"]
+
 print(f"{MAGENTA}🎵 Fetching {username}'s last {TARGET} played tracks...{RESET}\n")
 
-# --- FETCH TRACKS ---
 while len(tracks) < TARGET:
     data = fetch_recent(before=before)
     items = data.get("items", [])
@@ -86,6 +94,15 @@ with open(json_output, "w") as f:
 
 # --- GENERATE HTML ---
 html_output = "spotify_recent_500.html"
+
+# Avatar + Username header section
+h1_section = f"""
+<div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+  {'<img src="'+avatar+'" alt="avatar" width="64" height="64" style="border-radius:50%;">' if avatar else ''}
+  <h1 style="margin:0;">{username}'s Recently Played Tracks (500)</h1>
+</div>
+"""
+
 html_content = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -119,7 +136,7 @@ html_content = f"""
     padding-bottom: 10px;
     border-bottom: 1px solid #333;
   }}
-  img {{
+  img.album {{
     width: 75px;
     height: 75px;
     border-radius: 6px;
@@ -142,10 +159,10 @@ html_content = f"""
 </style>
 </head>
 <body>
-<h1>🎧 {username}'s Recently Played Tracks (500)</h1>
+{h1_section}
 {"".join([
     f'<div class="track">'
-    f'<img src="{t["art"]}" alt="album art">'
+    f'<img class="album" src="{t["art"]}" alt="album art">'
     f'<div class="info">'
     f'<a href="{t["url"]}" target="_blank"><strong>{t["name"]}</strong></a><br>'
     f'<span class="artist">{t["artist"]}</span><br>'
@@ -164,3 +181,4 @@ with open(html_output, "w") as f:
 print(f"\n✅ {BOLD}Done!{RESET}")
 print(f"💾 Saved JSON → {CYAN}{json_output}{RESET}")
 print(f"🌐 Web page → {YELLOW}{html_output}{RESET}")
+
