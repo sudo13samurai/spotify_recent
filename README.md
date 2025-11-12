@@ -30,7 +30,7 @@ complete with album art, artists, albums, and timestamps.
 2. Create an app → copy your **Client ID**, **Client Secret**, and add: http://127.0.0.1:8888/callback Redirect URIs.
 3. Use the Authorization Code Flow to get your access token, or run spotify_token.sh once to handle it.
 4. Export your token before running: export SPOTIFY_TOKEN="your_access_token_here"
-## Access Token Documentation : [https://developer.spotify.com/documentation/web-api/concepts/access-token](https://developer.spotify.com/documentation/web-api/concepts/access-token)
+## [https://developer.spotify.com/documentation/web-api/concepts/access-token](Access Token Documentation)
 
 ## 🧠 Usage
 export SPOTIFY_TOKEN="your_access_token_here"
