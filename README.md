@@ -1,4 +1,4 @@
-# 🎧 spotify_recent
+# 🎧 Spotify-Recently-Played
 
 A minimalist Python script that fetches your **500 most recently played Spotify tracks**,  
 displays them formatted and styled in the terminal, and exports a dark-themed webpage  
